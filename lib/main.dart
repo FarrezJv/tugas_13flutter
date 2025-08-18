@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_13flutter/tambah/tambah.dart';
+import 'package:tugas_13flutter/beranda/beranda.dart';
 
 void main() {
   //   initializeDateFormatting("id_ID");
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       //   // Tugas7flutter.id: (context) => Tugas7flutter(),
       //   Tugas8.id: (context) => Tugas8(),
       // },
-      home: Tambah1(),
+      home: Beranda1(),
     );
     // Navigator.pushNamed(context, '/Tugas6');
     // return MaterialApp(
