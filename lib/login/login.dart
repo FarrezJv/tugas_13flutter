@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_13flutter/botnav/botnav.dart';
+import 'package:tugas_13flutter/extension/navigation.dart';
+import 'package:tugas_13flutter/register/register.dart';
+import 'package:tugas_13flutter/shared%20preference/shared.dart';
+import 'package:tugas_13flutter/sqflite/db_helper.dart';
 
 class login1 extends StatefulWidget {
   const login1({super.key});
+  static const id = "/login";
 
   @override
   State<login1> createState() => _login1State();
 }
 
 class _login1State extends State<login1> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool isVisibility = false;
   bool _obscurePassword = true;
   @override
@@ -16,11 +24,12 @@ class _login1State extends State<login1> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            // gradient: LinearGradient(
+            //   colors: [Colors.blue, Colors.purple],
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomRight,
+            // ),
+            color: Colors.indigo,
           ),
         ),
         leading: Padding(
@@ -28,6 +37,8 @@ class _login1State extends State<login1> {
           child: Image.asset(
             "assets/images/pngwing.com.png",
             fit: BoxFit.contain,
+            width: 40,
+            height: 40,
           ),
         ),
         actions: [
@@ -55,21 +66,38 @@ class _login1State extends State<login1> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.green.shade400, Colors.orange.shade300],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              // gradient: LinearGradient(
+              //   colors: [Colors.green.shade400, Colors.orange.shade300],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              // ),
+              color: Colors.grey[100],
             ),
             child: Form(
               child: Column(
                 children: [
-                  Image(
-                    width: 200,
-                    height: 200,
-                    image: AssetImage("assets/images/nulis.png"),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image(
+                        width: 50,
+                        height: 50,
+                        image: AssetImage(
+                          "assets/images/Logo_crop-removebg-preview.png",
+                        ),
+                      ),
 
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Image(
+                          width: 200,
+                          height: 200,
+                          image: AssetImage("assets/images/nulis.png"),
+                        ),
+                      ),
+                    ],
+                  ),
                   Center(
                     child: Text(
                       "Selamat Datang kembali!",
@@ -88,6 +116,7 @@ class _login1State extends State<login1> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: TextFormField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           hintText: "Masukkan Email Anda",
                           labelText: "Email",
@@ -102,13 +131,17 @@ class _login1State extends State<login1> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
+                    padding: const EdgeInsets.only(
+                      // horizontal: 20,
+                      // vertical: 15,
+                      top: 15,
+                      right: 20,
+                      left: 20,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: TextFormField(
+                        controller: passwordController,
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           hintText: "Masukkan Password Anda",
@@ -154,7 +187,9 @@ class _login1State extends State<login1> {
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        login();
+                      },
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all<Color>(
                           Colors.orange,
@@ -180,6 +215,7 @@ class _login1State extends State<login1> {
                       ),
                       TextButton(
                         onPressed: () {
+                          context.push(Register1());
                           // context.push(RegisterScreen());
                           // Navigator.pushReplacement(
                           //   context,
@@ -219,30 +255,55 @@ class _login1State extends State<login1> {
                       ],
                     ),
                   ),
-                  // SizedBox(height: 20),
-                  // Row(
-                  //   children: [
-                  //     Image(
-                  //       image: AssetImage("assets/images/google.png.png"),
-                  //       width: 50,
-                  //       height: 50,
-                  //     ),
-                  //     Image(
-                  //       image: AssetImage("assets/images/facebook.png.png"),
-                  //       width: 50,
-                  //       height: 50,
-                  //     ),
-                  //     Image(
-                  //       image: AssetImage("assets/images/pinterest.png.png"),
-                  //       width: 50,
-                  //       height: 50,
-                  //     ),
-                  //   ],
-                  // ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/images/google.png.png"),
+                        width: 40,
+                        height: 40,
+                      ),
+                      SizedBox(width: 50),
+                      Image(
+                        image: AssetImage("assets/images/facebook.png.png"),
+                        width: 40,
+                        height: 40,
+                      ),
+                      SizedBox(width: 50),
+                      Image(
+                        image: AssetImage("assets/images/pinterest.png.png"),
+                        width: 40,
+                        height: 40,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
           ),
     );
+  }
+
+  login() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Email dan Password tidak boleh kosong")),
+      );
+      // isLoading = false;
+
+      return;
+    }
+    final userData = await DbHelper.loginUser(email, password);
+    if (userData != null) {
+      PreferenceHandler.saveLogin();
+      context.pushReplacementNamed(Botnav1.id);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Email atau Password salah")),
+      );
+    }
   }
 }

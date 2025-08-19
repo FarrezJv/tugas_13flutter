@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_13flutter/beranda/beranda.dart';
+import 'package:tugas_13flutter/botnav/botnav.dart';
+import 'package:tugas_13flutter/login/login.dart';
+import 'package:tugas_13flutter/splash%20screen/splash.dart';
 
 void main() {
   //   initializeDateFormatting("id_ID");
@@ -34,16 +36,14 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 3, 3, 3),
         ),
       ),
-      // initialRoute: Tugas6.id,
-      // routes: {
-      //   '/tugas6': (context) => Tugas6(),
-      //   // Tugas10.id: (context) => Tugas10(),
-      //   RegisterScreen.id: (context) => const RegisterScreen(),
-      //   // '/Tugastes': (context) => Tugastes(),
-      //   // Tugas7flutter.id: (context) => Tugas7flutter(),
-      //   Tugas8.id: (context) => Tugas8(),
-      // },
-      home: Beranda1(),
+      initialRoute: Day16SplashScreen.id,
+      routes: {
+        "/login": (context) => login1(),
+        Day16SplashScreen.id: (context) => Day16SplashScreen(),
+        // Day7GridView.id: (context) => Day7GridView(),
+        Botnav1.id: (context) => Botnav1(),
+      },
+      // home: Day16SplashScreen(),
     );
     // Navigator.pushNamed(context, '/Tugas6');
     // return MaterialApp(
