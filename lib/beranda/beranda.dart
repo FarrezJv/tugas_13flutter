@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class BerandaData {
+  static final int jumlahPertanyaan = 11; // jumlah container pertanyaan
+}
+
 class Beranda1 extends StatefulWidget {
   const Beranda1({super.key});
   static const id = "/beranda";
@@ -63,14 +67,10 @@ class _Beranda1State extends State<Beranda1> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          // gradient: LinearGradient(
-          //   colors: [Colors.indigo, Colors.blueAccent],
-          //   //[Colors.green.shade400, Colors.orange.shade300],
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   // Colors.yellow[100], Colors.white,
-          // ),
-          color: Colors.grey[100],
+          image: DecorationImage(
+            image: AssetImage("assets/images/background toy.jfif"),
+            fit: BoxFit.contain,
+          ),
         ),
         child: Form(
           child: SingleChildScrollView(

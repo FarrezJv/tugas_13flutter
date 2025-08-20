@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_13flutter/model/question.dart';
 import 'package:tugas_13flutter/sqflite/db_helper.dart';
+import 'package:tugas_13flutter/widgets/input_card.dart';
 
 class Review1 extends StatefulWidget {
   const Review1({super.key});
@@ -61,62 +62,160 @@ class _Review1State extends State<Review1> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: question.length,
-            itemBuilder: (BuildContext context, int index) {
-              final dataquestion = question[index];
-              return ListTile(
-                title: Text(dataquestion.pertanyaan),
-                subtitle: Text(dataquestion.jawaban),
-              );
-            },
-            // return Container(
-            //   width: double.infinity,
-            //   height: 120,
-            //   padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            //   decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //       colors: [Colors.orange.shade300, Colors.green.shade400],
-            //       begin: Alignment.topCenter,
-            //       end: Alignment.bottomCenter,
-            //     ),
-            //     borderRadius: BorderRadius.circular(20),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         color: Colors.black26,
-            //         blurRadius: 8,
-            //         offset: Offset(0, 4),
-            //       ),
-            //     ],
-            //   ),
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Text(
-            //         "Apa Bahasa Jepangnya Rubah?",
-            //         style: TextStyle(
-            //           fontSize: 20,
-            //           fontWeight: FontWeight.bold,
-            //           color: Colors.white,
-            //         ),
-            //       ),
-            //       Text(
-            //         "Jawaban: きつね atau kitsune",
-            //         style: TextStyle(
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //           color: Colors.white,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background toy.jfif"),
+              fit: BoxFit.contain,
+            ),
           ),
-        ],
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: question.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final dataquestion = question[index];
+                    return Card1(
+                      data: dataquestion,
+                      onEdit: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Edit Data"),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  controller: pertanyaanController
+                                    ..text = dataquestion.pertanyaan,
+                                  decoration: InputDecoration(
+                                    hintText: "Pertanyaan",
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                TextFormField(
+                                  controller: jawabanController
+                                    ..text = dataquestion.jawaban,
+                                  decoration: InputDecoration(
+                                    hintText: "Jawaban",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  final updatequestion = Question1(
+                                    id: dataquestion.id!,
+                                    pertanyaan: pertanyaanController.text,
+                                    jawaban: jawabanController.text,
+                                  );
+                                  DbHelper.updateQuestion(updatequestion);
+                                  getQuestion();
+                                  Navigator.pop(context);
+                                },
+                                child: Text("OK"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Back"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      onDelete: () {
+                        DbHelper.deleteQuestion(dataquestion.id!);
+                        getQuestion();
+                      },
+                    );
+                    // ListTile(
+                    //   title: Text(dataquestion.pertanyaan),
+                    //   subtitle: Text(dataquestion.jawaban),
+                    //   trailing: Row(
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     children: [
+                    //       IconButton(
+                    //         onEdit: () {
+                    //           showDialog(
+                    //             context: context,
+                    //             builder: (context) => AlertDialog(
+                    //               title: Text("Edit Pertanyaan dan jawaban"),
+                    //               content: Column(
+                    //                 mainAxisSize: MainAxisSize.min,
+                    //                 children: [
+                    //                  TextFormField(
+                    //                   controller: pertanyaanController
+                    //                   ..text
+
+                    //                  )
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           );
+                    //         },
+                    //         icon: icon,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // );
+                  },
+                  // return Container(
+                  //   width: double.infinity,
+                  //   height: 120,
+                  //   padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  //   decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //       colors: [Colors.orange.shade300, Colors.green.shade400],
+                  //       begin: Alignment.topCenter,
+                  //       end: Alignment.bottomCenter,
+                  //     ),
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black26,
+                  //         blurRadius: 8,
+                  //         offset: Offset(0, 4),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       Text(
+                  //         "Apa Bahasa Jepangnya Rubah?",
+                  //         style: TextStyle(
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         "Jawaban: きつね atau kitsune",
+                  //         style: TextStyle(
+                  //           fontSize: 15,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
