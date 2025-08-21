@@ -62,16 +62,16 @@ class _Review1State extends State<Review1> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/background toy.jfif"),
-              fit: BoxFit.contain,
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background toy.jfif"),
+            fit: BoxFit.contain,
           ),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
