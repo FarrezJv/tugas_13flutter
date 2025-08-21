@@ -71,7 +71,7 @@ class _login1State extends State<login1> {
               //   begin: Alignment.topLeft,
               //   end: Alignment.bottomRight,
               // ),
-              color: Colors.grey[100],
+              color: const Color.fromARGB(255, 255, 211, 145),
             ),
             child: Form(
               child: Column(
